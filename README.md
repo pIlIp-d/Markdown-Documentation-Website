@@ -3,6 +3,10 @@
 A project to make documenting easy and pretty.
 Just throw in your .md files and get a ready Website.
 
+
+[TOC]
+
+
 # My Python implementation
 
 ## setting up the project
@@ -25,16 +29,21 @@ sudo chmod g+x /var/www/website/build_website.py
 ```
 ## file structure
 
-**docs/** -> your .md files and folders
+website/
 
-**index.php** -> Main Page with all the links
-
-**style/** -> add style files or edit style.css (automatically added)
-
-**libs** -> add .js files (automatically added)
-
-**pages/** -> the converted html files 
-
+├── **libs/**  
+│   └── **[scripts].js**    - automatically added to html  
+├── **style/**  
+│   └── **[style].css**     - automatically added to html  
+├── **pages/**  
+│   └── **[pages].html**    - convertet md files  
+├── **docs/**  
+│   │── **subfolders/**  
+│   │   └── **[more_docs].md**  
+│   └── **[docs].md**       - raw md files  
+├── **img/**                - address via `![Picture](/img/...)`  
+│── **index.hp**            - created main page with all the links  
+└── **build_website.py**    - script that is executed by index.php  
 
 ## Apache2
 
@@ -81,7 +90,7 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 &ensp;&ensp;&ensp; Copyright (c) 2010, [Andris Reinman](http://www.andrisreinman.com)<br>
 &ensp;&ensp;&ensp; Original Highlight.js Copyright (c) 2006, Ivan Sagalaev<br>
-&ensp;&ensp;&ensp; [FULL LICENCE](https://github.com/pIlIp-d/Markdown-Documentation-Website/blob/f046c26b21d843919dbddb0a57b27fb1e2839708/libs/LICENSE)
+&ensp;&ensp;&ensp; [FULL LICENCE](/libs/LICENCE)
 
 
 ## Python Markdown Package
@@ -100,13 +109,12 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 ### github.css
 
-&ensp;&ensp;&ensp; no original link found
+&ensp;&ensp;&ensp; no original link found<br>
 &ensp;&ensp;&ensp; Copyright (c) [Vasily Polovnyov](https://github.com/vast)
 
 ### Dark Theme Css
 
 - [Tomorrow Night Theme](https://jmblog.github.io/color-themes-for-google-code-highlightjs)
-
 
 # possible other ways
 
