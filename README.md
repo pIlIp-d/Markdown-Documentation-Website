@@ -18,6 +18,9 @@ sudo chgrp -R www-data /var/www/website
 #set permission inheritence
 sudo chmod -R g+s /var/www/website
 
+#set user rights
+sudo chmod +R u+rwx /var/www/website
+
 #set group rights
 sudo chmod -R g+rw /var/www/website
 
