@@ -4,9 +4,6 @@ A project to make documenting easy and pretty.
 Just throw in your .md files and get a ready Website.
 
 
-[TOC]
-
-
 # My Python implementation
 
 ## setting up the project
@@ -30,7 +27,6 @@ sudo chmod g+x /var/www/website/build_website.py
 ## file structure
 
 website/
-
 ├── **libs/**  
 │   └── **[scripts].js**    - automatically added to html  
 ├── **style/**  
