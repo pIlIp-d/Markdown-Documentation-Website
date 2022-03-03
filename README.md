@@ -26,7 +26,7 @@ sudo chmod g+x /var/www/website/build_website.py
 ```
 ## file structure
 
-website/
+website/  
 ├── **libs/**  
 │   └── **[scripts].js**    - automatically added to html  
 ├── **style/**  
