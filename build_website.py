@@ -34,17 +34,19 @@ def convert_md_to_html(file):
     return markdown.markdown(file, extensions=['extra', 'toc'], extension_configs=config)
     
 def save_file(text, output_file):
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)#create directory if doesn't exist
-    with open(output_file, "w") as f:
+    os.makedirs(os.path.split(output_file)[0], exist_ok=True)#create directory if doesn't exist
+    
+    with open(output_file, "w+") as f:
         f.write(text)
 
 def convert_and_save_files(file_list):
+    
     for file in file_list:
         with open(file, "r") as f:
             html = convert_md_to_html(f.read())
             save_file(make_proper_html(html), ROOT_DIR+'/pages/'+get_path_for_html(file.replace(ROOT_DIR+"/docs/","")))
 
-def make_proper_html(body, php = False):
+def make_proper_html(body, php = False):    
     html = "<!DOCTYPE html><html><head><meta charset='UTF-16'></head>"
     for css_file in get_file_list(ROOT_DIR+r"/style/"):
         if css_file[-4:] == ".css":
@@ -53,13 +55,15 @@ def make_proper_html(body, php = False):
         if js_file[-3:] == ".js":
             html += "<script src='"+ js_file.replace(ROOT_DIR,"") +"'></script>"
     html += "<script>hljs.initHighlightingOnLoad();</script>"#load syntax highlighting
+    if not php:
+        html += "<a href='/index.php'>Main Page</a>"
     html += body
     if php:
-        html += "<?php ini_set('display_errors', 1);if (isset($_GET['rebuild'])){ shell_exec(escapeshellcmd('python3 /var/www/website/build_website.py'));"
+        html += "<?php ini_set('display_errors', 1);if (isset($_GET['rebuild'])){ $out = shell_exec('python3 /var/www/website/build_website.py');"
+        html += "echo $out;"
         html += "echo \"<form action='/index.php' method='get'></form><script>location.href = location.href.split('?')[0]</script>\";}?>"
-        html += "<form action='index.php' method='get'><input id='rebuild_btn' type='submit' name='rebuild' value='Rebuild HTML'></form>"
-
-    html += "<footer><span id='footer'>Last Build: "+ datetime.now().strftime("%Y-%m-%d  %H:%M:%S") +"  <a href='https://github.com/pIlIp-d/Markdown-Documentation-Website'>pilip-d</a></span></footer>"
+    button = "<form action='/index.php' method='get'><input id='rebuild_btn' type='submit' name='rebuild' value='Rebuild HTML'></form>"
+    html += "<footer>"+ button +"<span id='footer'> Last Build: "+ datetime.now().strftime("%Y-%m-%d  %H:%M:%S") +"  <a href='https://github.com/pIlIp-d/Markdown-Documentation-Website'>pilip-d</a></span></footer>"
     html += "</body></html>"
     return html
 
@@ -81,8 +85,9 @@ def create_index_php(file_list):
         print(file +" >> pages/"+path_to_html)#show progress
         md += "+ _"+ get_creation_time(file) +"_ >> ["+ path_to_html[:-5] +"](/pages/"+ path_to_html +") \n"
     #save index.html
-    with open("index.php", "w+") as f:
+    with open("index.php", "w") as f:
         f.write(make_proper_html(convert_md_to_html(md), True))
+    
 
 def remove_old_version():
     path=ROOT_DIR+'/pages/'
@@ -91,7 +96,6 @@ def remove_old_version():
 
 def __main__():
     file_list = get_file_list(ROOT_DIR + r'/docs/')
-
     if remove_old_files_at_every_build:
         remove_old_version()
     convert_and_save_files(file_list)
