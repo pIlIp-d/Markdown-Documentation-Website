@@ -3,6 +3,10 @@
 A project to make documenting easy and pretty.
 Just throw in your .md files and get a ready Website.
 
+1. setting up the project files
+2. setting up Apache
+3. setting priv for existing smb share
+4. build your website and start documenting
 
 # My Python implementation
 
@@ -18,18 +22,13 @@ sudo chgrp -R www-data /var/www/website
 #set permission inheritence
 sudo chmod -R g+s /var/www/website
 
-#set user rights
-sudo chmod +R u+rwx /var/www/website
-
 #set group rights
-sudo chmod -R g+rw /var/www/website
+sudo chmod -R 774 /var/www/website
 
-#make pythonscript executable
-sudo chmod g+x /var/www/website/build_website.py
 ```
 ## file structure
 
-website/  
+website/
 ├── **libs/**  
 │   └── **[scripts].js**    - automatically added to html  
 ├── **style/**  
@@ -53,7 +52,7 @@ sudo apt install apache2
 
 sudo nano /etc/apache2/sites-available/00-default.conf
 
-#change
+#change to
 DocumentRoot /var/www/website
 ```
 ## update Markdown Files
