@@ -31,6 +31,14 @@ input{
     text-decoration: none;
     display: inline-block;
 }
+h1 {
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid #a0a0a0;
+} 
+h2 {
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid #a0a0a0;
+}
 a { color: lightblue; }
 a:hover { color: darkgrey; }
 a:visited { color: lightblue; }
