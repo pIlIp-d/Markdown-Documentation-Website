@@ -81,7 +81,7 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 &ensp;&ensp;&ensp; Copyright (c) 2010, [Andris Reinman](http://www.andrisreinman.com)<br>
 &ensp;&ensp;&ensp; Original Highlight.js Copyright (c) 2006, Ivan Sagalaev<br>
-&ensp;&ensp;&ensp; [FULL LICENCE](/libs/LICENCE)
+&ensp;&ensp;&ensp; [FULL LICENCE](https://github.com/pIlIp-d/Markdown-Documentation-Website/blob/f046c26b21d843919dbddb0a57b27fb1e2839708/libs/LICENSE)
 
 
 ## Python Markdown Package
