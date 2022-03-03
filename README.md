@@ -3,11 +3,10 @@
 A project to make documenting easy and pretty.
 Just throw in your .md files and get a ready Website.
 
-
 # My Python implementation
-----
+
 ## setting up the project
-----
+
 ```bash
 mkdir /var/www/website
 git clone https://github.com/pIlIp-d/Markdown-Documentation-Website /var/www/website
@@ -25,7 +24,7 @@ sudo chmod -R g+rw /var/www/website
 sudo chmod g+x /var/www/website/build_website.py
 ```
 ## file structure
-----
+
 **docs/** -> your .md files and folders
 
 **index.php** -> Main Page with all the links
@@ -38,7 +37,7 @@ sudo chmod g+x /var/www/website/build_website.py
 
 
 ## Apache2
-----
+
 use apache2 to display the website
 
 ```bash
@@ -50,7 +49,7 @@ sudo nano /etc/apache2/sites-available/00-default.conf
 DocumentRoot /var/www/website
 ```
 ## update Markdown Files
-----
+
 ### samba privileges
 
 use samba share to work on your .md files
@@ -74,9 +73,9 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 
 # Dependencies
-----
+
 ## Syntax Highlighting
-----
+
 
 - [Highlight.js](https://highlightjs.org/)
 
@@ -84,7 +83,6 @@ a cronjob would work too, but may be outdated sometimes<br>
 &ensp;&ensp;&ensp; Original Highlight.js Copyright (c) 2006, Ivan Sagalaev<br>
 &ensp;&ensp;&ensp; [FULL LICENCE](/libs/LICENCE)
 
-----
 
 ## Python Markdown Package
 
@@ -98,9 +96,7 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 - [python-markdown.extra](https://python-markdown.github.io/extensions/extra/) - comes with markdown package
 
-----
-
-## Css sources
+## CSS sources
 
 ### github.css
 
@@ -111,7 +107,6 @@ a cronjob would work too, but may be outdated sometimes<br>
 
 - [Tomorrow Night Theme](https://jmblog.github.io/color-themes-for-google-code-highlightjs)
 
-----
 
 # possible other ways
 
@@ -119,6 +114,3 @@ a cronjob would work too, but may be outdated sometimes<br>
 + [docosaurus](https://docusaurus.io) - modern, React.js, more Secure
 + [showdown](http://showdownjs.com/) - Node.js
 + [remarkable](https://github.com/jonschlinkert/remarkable) - Node.js good plugins (plugins didn't work as normal js)
-
-
-
