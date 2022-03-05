@@ -74,17 +74,26 @@ def get_creation_time(path):
     t_obj = time.strptime(ctime)
     return time.strftime("%Y-%m-%d %H:%M:%S", t_obj)
 
+def get_file_time_string(file):
+    return "+ _"+ get_creation_time(file) +"_ >> "
+
 def create_index_php(file_list):
+    parent_dir = ""
     md = "# Documentation Website\n"
     for file in file_list:
         # adding indent for folder strukture
         depth = len(file.split("/")) - 2 - len(ROOT_DIR.split("/"))
+        if not parent_dir == file.split("/")[-2]:#dir changed
+            parent_dir = file.split("/")[-2]
+            for i in range(depth-1):
+                md += "\t"
+            md +="+ "+file.replace(file.split("/")[-1],"").replace(ROOT_DIR+"/docs","") + "\n"
         for i in range(depth):
             md += "\t"
         # add markdown line
         path_to_html = get_path_for_html(file).replace(ROOT_DIR+"/","").replace("docs/","")
         print(file +" >> pages/"+path_to_html)#show progress
-        md += "+ _"+ get_creation_time(file) +"_ >> ["+ path_to_html[:-5] +"](/pages/"+ path_to_html +") \n"
+        md += get_file_time_string(file)+"["+ path_to_html[:-5] +"](/pages/"+ path_to_html +") \n"
     #save index.html
     with open("index.php", "w") as f:
         f.write(make_proper_html(convert_md_to_html(md), True))
