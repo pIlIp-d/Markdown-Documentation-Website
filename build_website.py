@@ -6,9 +6,9 @@ from datetime import datetime
 import shutil
 
 #--config--
-ROOT_DIR=r"/var/www/website"#don't add '/' at the end
 remove_old_files_at_every_build = True #disable if you manually add or edit /pages files
 
+ROOT_DIR=os.getcwd()
 
 def get_path_for_html(md_path):
     return md_path[:-2]+"html"
@@ -55,14 +55,15 @@ def make_proper_html(body, php = False):
         if js_file[-3:] == ".js":
             html += "<script src='"+ js_file.replace(ROOT_DIR,"") +"'></script>"
     html += "<script>hljs.initHighlightingOnLoad();</script>"#load syntax highlighting
-    if not php:
-        html += "<a href='/index.php'>Main Page</a>"
-    html += body
     if php:
         html += "<?php ini_set('display_errors', 1);if (isset($_GET['rebuild'])){ $out = shell_exec('python3 /var/www/website/build_website.py');"
         html += "echo $out;"
-        html += "echo \"<form action='/index.php' method='get'></form><script>location.href = location.href.split('?')[0]</script>\";}?>"
+        html += "echo \"<form action='/index.php' method='get'></form><script>setTimeout(1000);location.href = location.href.split('?')[0]</script>\";}?>"
+    else:
+        html += "<a href='/index.php'>Main Page</a>"
+    html += body
     button = "<form action='/index.php' method='get'><input id='rebuild_btn' type='submit' name='rebuild' value='Rebuild HTML'></form>"
+    html += "<br><br>"
     html += "<footer>"+ button +"<span id='footer'> Last Build: "+ datetime.now().strftime("%Y-%m-%d  %H:%M:%S") +"  <a href='https://github.com/pIlIp-d/Markdown-Documentation-Website'>pilip-d</a></span></footer>"
     html += "</body></html>"
     return html
@@ -87,7 +88,6 @@ def create_index_php(file_list):
     #save index.html
     with open("index.php", "w") as f:
         f.write(make_proper_html(convert_md_to_html(md), True))
-    
 
 def remove_old_version():
     path=ROOT_DIR+'/pages/'
