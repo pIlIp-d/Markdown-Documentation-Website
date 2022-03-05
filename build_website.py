@@ -40,11 +40,11 @@ def save_file(text, output_file):
         f.write(text)
 
 def convert_and_save_files(file_list):
-    
     for file in file_list:
-        with open(file, "r") as f:
-            html = convert_md_to_html(f.read())
-            save_file(make_proper_html(html), ROOT_DIR+'/pages/'+get_path_for_html(file.replace(ROOT_DIR+"/docs/","")))
+        if file[-2:] == "md":
+            with open(file, "r") as f:
+                html = convert_md_to_html(f.read())
+                save_file(make_proper_html(html), ROOT_DIR+'/pages/'+get_path_for_html(file.replace(ROOT_DIR+"/docs/","")))
 
 def make_proper_html(body, php = False):    
     html = "<!DOCTYPE html><html><head><meta charset='UTF-16'></head>"
