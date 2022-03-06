@@ -44,10 +44,11 @@ def convert_and_save_files(file_list):
         if file[-2:] == "md":
             with open(file, "r") as f:
                 html = convert_md_to_html(f.read())
-                save_file(make_proper_html(html), ROOT_DIR+'/pages/'+get_path_for_html(file.replace(ROOT_DIR+"/docs/","")))
+                filename = file.replace(ROOT_DIR+"/docs/","")
+                save_file(make_proper_html(html, filename.split("/")[-1].replace(".md","")), ROOT_DIR+'/pages/'+get_path_for_html(filename))
 
-def make_proper_html(body, php = False):    
-    html = "<!DOCTYPE html><html><head><meta charset='UTF-16'></head>"
+def make_proper_html(body, name, php = False):    
+    html = "<!DOCTYPE html><html><title>"+ name +"</title><head><meta charset='UTF-16'></head>"
     for css_file in get_file_list(ROOT_DIR+r"/style/"):
         if css_file[-4:] == ".css":
             html += "<link rel='stylesheet' href='"+ css_file.replace(ROOT_DIR,"") +"'>"
@@ -57,7 +58,6 @@ def make_proper_html(body, php = False):
     html += "<script>hljs.initHighlightingOnLoad();</script>"#load syntax highlighting
     if php:
         html += "<?php ini_set('display_errors', 1);if (isset($_GET['rebuild'])){ $out = shell_exec('python3 /var/www/website/build_website.py');"
-        html += "echo $out;"
         html += "echo \"<form action='/index.php' method='get'></form><script>setTimeout(1000);location.href = location.href.split('?')[0]</script>\";}?>"
     else:
         html += "<a href='/index.php'>Main Page</a>"
@@ -87,16 +87,15 @@ def create_index_php(file_list):
             parent_dir = file.split("/")[-2]
             for i in range(depth-1):
                 md += "\t"
-            md +="+ "+file.replace(file.split("/")[-1],"").replace(ROOT_DIR+"/docs","") + "\n"
+            md +="+ "+file.replace(file.split("/")[-1],"").replace(ROOT_DIR+"/docs","") + "\n"#dir line
         for i in range(depth):
             md += "\t"
         # add markdown line
         path_to_html = get_path_for_html(file).replace(ROOT_DIR+"/","").replace("docs/","")
-        print(file +" >> pages/"+path_to_html)#show progress
-        md += get_file_time_string(file)+"["+ path_to_html[:-5] +"](/pages/"+ path_to_html +") \n"
+        md += get_file_time_string(file)+ "["+ path_to_html[:-5] +"](/pages/"+ path_to_html +") \n"
     #save index.html
     with open("index.php", "w") as f:
-        f.write(make_proper_html(convert_md_to_html(md), True))
+        f.write(make_proper_html(convert_md_to_html(md), "Main Page", True))
 
 def remove_old_version():
     path=ROOT_DIR+'/pages/'
@@ -109,7 +108,7 @@ def __main__():
         remove_old_version()
     convert_and_save_files(file_list)
     create_index_php(file_list)
-    print(datetime.now().strftime("%Y-%m-%d  %H:%M:%S"))
+    print("OK")
 
 if __name__ == '__main__':
     __main__()
