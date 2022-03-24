@@ -1,3 +1,8 @@
+# Deprecated
+
+**Newer verison is build for mdbook** [Repo](https://github.com/pIlIp-d/mdbook-auto-SUMMARY)
+
+
 # Markdown-Documentation-Website
 
 A project to make documenting easy and pretty.
